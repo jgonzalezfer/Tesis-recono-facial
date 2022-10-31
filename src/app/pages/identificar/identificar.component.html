@@ -1,0 +1,52 @@
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-4"></div>
+        <div class="col-4" style="margin-top: 150px;">
+
+            <div class="jumbotron bg-dark" style=" color:white; text-align: center;">
+                <h3><i class="fa fa-video-camera" aria-hidden="true"></i> Identificación</h3>
+
+                <hr class="my-4">
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-success" data-toggle="modal"
+                    data-target="#staticBackdrop">
+                    Activar
+                </button>
+
+            </div>
+        </div>
+        <div class="col-4"></div>
+    </div>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title" id="staticBackdropLabel" style="color:white"><i class="fas fa-video"></i>
+                    Indentificacion Facial</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card text-white bg-dark mb-3">
+                    <div class="card-header bg-secondary">Camara de identificacion</div>
+                    <video style="position: absolute; top: 0;visibility:hidden; left: 0;opacity: 0;" width="640"
+                        height="480" autoplay muted #videoContainer></video>
+                    <canvas width="640" height="480" autoplay class="js-canvas" #myCanvas></canvas><br>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger">Detectar Rostro</button>
+                <button type="button" class="btn btn-secondary">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
