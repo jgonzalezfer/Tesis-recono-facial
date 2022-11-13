@@ -1,3 +1,4 @@
+// Ts spec de componentes - General "no se utiliza mucho"
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 

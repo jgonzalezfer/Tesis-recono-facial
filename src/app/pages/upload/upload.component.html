@@ -1,4 +1,4 @@
-<h1 style="text-align: center">UploadFiles con Angular-FaceApi</h1>
+<h1 style="text-align: center">Subida de Datos - Firebase</h1>
 
 <hr>
 
@@ -13,13 +13,13 @@
                     <div class="card-header bg-secondary" #imageFile>Subir Imagen</div>
 
                     <div class="card-body">
-                        <img class="img-fluid" src="../../../assets/img/noimage.png" class="card-img-top">
+                        <img class="img-fluid" src="../../../assets/img/noimage.jpg" class="card-img-top">
                         <hr style="border-color:azure">
                         <form>
                             <div class="form-group">
                                 <input type="file" class="form-control-file" class="form-control-file"
                                     formControlName="imgFile" accept="image/*">
-                                <button type="submit" class="btn btn-outline-secondary mt-3">Upload</button>
+                                <button type="submit" class="btn btn-outline-secondary mt-3">Enviar</button>
                             </div>
                         </form>
                     </div>
@@ -30,19 +30,19 @@
             <div class="col-md-7">
                 <div class="card">
                     <div class="card text-white bg-dark mb-3">
-                        <div class="card-header bg-secondary">Rostro Procesados</div>
+                        <div class="card-header bg-secondary">Lista de Datos</div>
                         <table class="table table-hover table-dark">
                             <thead>
                                 <tr>
-                                    <th scope="col">imagen</th>
+                                    <th scope="col">Fotografias</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>FOTO</td>
-                                    <td>Otto</td>
+                                    <td>foto</td>
+                                    <td>Nombre</td>
                                     <td><button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> </button></td>
                                 </tr>
                             </tbody>

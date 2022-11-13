@@ -1,3 +1,4 @@
+// Ts de componentes - General
 import { Component } from '@angular/core';
 
 @Component({
