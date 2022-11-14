@@ -13,13 +13,13 @@
                     <div class="card-header bg-secondary" #imageFile>Subir Información del Estudiante</div>
 
                     <div class="card-body">
-                        <img class="img-fluid" src="../../../assets/img/noimage.jpg" class="card-img-top">
+                        <img class="img-fluid" [src]="imgURL" class="card-img-top">
                         <hr style="border-color:azure">
-                        <form>
+                        <form (ngSubmit)="onSubmit()"[formGroup]="imagenesForm">
                             <div class="form-group">
-                                <input type="file" class="form-control-file" class="form-control-file"
-                                    formControlName="imgFile" accept="image/*">
-                                <button type="submit" class="btn btn-outline-secondary mt-3">Enviar</button>
+                                <input type="file" class="form-control-file" class="form-control-file" 
+                                    formControlName="imgFile" accept="image/*" (change)="slectImage($event)">
+                                <button type="submit" class="btn btn-outline-secondary mt-3" [disabled]="btnActive">Enviar</button>
                             </div>
                         </form>
                     </div>
