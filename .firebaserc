@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "tesis-reco-facial": {
+      "hosting": {
+        "deteccionFacial": [
+          "tesis-reco-facial"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "tesis-reco-facial"
+  }
+}

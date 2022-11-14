@@ -20,6 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies":["@tensorflow/tfjs-core"],
             "outputPath": "dist/deteccion-facial",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -100,6 +101,16 @@
               "src/styles.css"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "deteccionFacial:build:production",
+            "firebaseProject": "tesis-reco-facial",
+            "firebaseHostingSite": "tesis-reco-facial"
           }
         }
       }
