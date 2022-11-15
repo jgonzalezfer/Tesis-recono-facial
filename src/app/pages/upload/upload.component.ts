@@ -1,3 +1,4 @@
+// Ts de subida de datos general
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 //libreria de firebase
 import * as faceapi from 'face-api.js';
@@ -5,6 +6,8 @@ import { ImagenesModel } from 'src/app/models/imagenes.model';
 //libreria de formularios
 import { FormBuilder, Validators } from '@angular/forms';
 import { async } from '@angular/core/testing';
+import Swal from 'sweetalert2';
+import { ImagenesService } from 'src/app/services/imagenes.service';
 
 @Component({
   selector: 'app-upload',
@@ -31,7 +34,7 @@ export class UploadComponent implements OnInit {
   })
 
 
-  constructor(private fb:FormBuilder, private renderer:Renderer2) { }
+  constructor(private fb:FormBuilder, private renderer:Renderer2, private imagenesSvc: ImagenesService) { }
 
   ngOnInit(): void {
   }
@@ -51,11 +54,9 @@ export class UploadComponent implements OnInit {
          this.imagen ={
           archivo : this.file[0]
          }
-         
-
 
       }
-      this.btnActive = false;
+      this.btnActive = false; // boton "enviar" desactivado
 
       //Manejo del DOM (html+ css)
       var containerImage =  document.createElement('div');
@@ -82,27 +83,25 @@ export class UploadComponent implements OnInit {
   
       this.renderer.appendChild(this.imageFile.nativeElement, containerImage);
   
-      this.processFace(this.imgProcess, containerImage);
-  
+      this.processFace(this.imgProcess, containerImage);  
     }
-
   }
 
 //Faceapi.js (Promesas de llamadas) - Reconocmiento del rostro
 
   processFace = async (image:any, imageContainer:any) => {
 
-    await faceapi.nets.tinyFaceDetector.loadFromUri ('/assets/models');
-    await faceapi.nets.faceLandmark68Net.loadFromUri('/assets/models');
-    await faceapi.nets.faceRecognitionNet.loadFromUri('/assets/models');
+    await faceapi.nets.tinyFaceDetector.loadFromUri ('/assets/models'); // Detector cara
+    await faceapi.nets.faceLandmark68Net.loadFromUri('/assets/models'); // Detector  puntos cardinales
+    await faceapi.nets.faceRecognitionNet.loadFromUri('/assets/models'); // Reconocimiento
 
-    const detection = await faceapi.detectSingleFace(image, new faceapi.TinyFaceDetectorOptions())
+    const detection = await faceapi.detectSingleFace(image, new faceapi.TinyFaceDetectorOptions()) // buscar una cara
                   .withFaceLandmarks()
-                  .withFaceDescriptor(); //Calculo de descripcion facial
+                  .withFaceDescriptor(); // Calculo de descripcion facial
     
         if (typeof detection === 'undefined'){ // Reconocmiento de imagen(si es persona o no)
             
-          imageContainer.querySelector('.status').innerText='No se pudo procesar la imagen';
+          imageContainer.querySelector('.status').innerText='Persona no detectada';
           imageContainer.querySelector('.status').style.color='red';
           setTimeout(() => {
             imageContainer.querySelector('.status').innerText='';
@@ -110,21 +109,64 @@ export class UploadComponent implements OnInit {
             this.imagenesForm.reset();
           }, 2000);
           this.btnActive =false;
-
         }else{
-          imageContainer.querySelector('.status').innerText='Procesando';
-          imageContainer.querySelector('.status').style.color='blue';
+          imageContainer.querySelector('.status').innerText='Persona si detectada';
+          imageContainer.querySelector('.status').style.color='#ffffff';
           setTimeout(() => {
             imageContainer.querySelector('.status').innerText='';
             this.onSubmit();
           }, 4000);
 
         }
-
   }
 
-  onSubmit(){
+  onSubmit(){ // activación de envio de datos
 
+    Swal.fire({
+      //Datos del Estudiante 
+      title:'Introducir el nombre de la imagen',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton:true,
+      confirmButtonText: 'Guardar',
+      allowOutsideClick: false
+    }).then((result)=>{
+
+      if (result.isConfirmed && result.value){
+
+        let cargarImagenDatos: any = {
+          nombreImagen:result.value
+        }
+        this.imagenesSvc.cargarImagenesFirebase(this.imagen, cargarImagenDatos);
+
+        Swal.fire({
+          icon:'success',
+          title:'La imagen se cargo',
+          text:'En breve aparecera la imagen cargada'
+        }).then((result)=>{
+
+          if (result){
+            this.imgURL = '../../../assets/img/noimage.jpg';
+            this.imagenesForm.reset();
+          }
+        })
+      }else{
+        // si no tiene datos
+        if (!result.isConfirmed && !result.value){
+          location.reload();
+        }else{
+          Swal.fire({
+            icon:'error',
+            title:'Error',
+            text:'Debe llenar el nombre',
+            confirmButtonText:'OK'
+          }).then((result)=>{
+            this.imagenesForm.reset();
+          })
+        }
+      }
+    })
   }
-
 }

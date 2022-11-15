@@ -2,7 +2,7 @@
 export class FileItems{
 
     public archivo:File;
-    public ur1?:string;
+    public url?:string;
 
     constructor(archivo:File){
         this.archivo=archivo;
