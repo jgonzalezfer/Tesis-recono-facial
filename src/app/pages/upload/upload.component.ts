@@ -88,9 +88,7 @@ export class UploadComponent implements OnInit {
     }
   }
 
-//Faceapi.js (Promesas de llamadas) - Reconocmiento del rostro
-
-  processFace = async (image:any, imageContainer:any) => {
+  processFace = async (image:any, imageContainer:any) => { //Faceapi.js (Promesas de llamadas) - Reconocmiento del rostro
 
     await faceapi.nets.tinyFaceDetector.loadFromUri ('/assets/models'); // Detector cara
     await faceapi.nets.faceLandmark68Net.loadFromUri('/assets/models'); // Detector  puntos cardinales
@@ -184,6 +182,10 @@ export class UploadComponent implements OnInit {
 
     })
 
+  }
+
+  eliminar(id:any, nombreImagen:string){
+    this.imagenesSvc.delateimg(id, nombreImagen);
   }
 
 

@@ -81,4 +81,21 @@ export class ImagenesService {
 
    }
 
+
+   public delateimg(id:string, imagenNombre:string){ // eliminar usuario
+    const storage =  getStorage();
+    const delateimagen = ref(storage, `${this.CARPETA_IMAGENES}/${imagenNombre.replace(/ /g, '')}`);
+
+    deleteObject(delateimagen).then(()=>{ // eliminacion de la imagen
+
+      Swal.fire('Exito', 'Se elimino corectamnete', 'success');
+
+    }).catch((err)=>{
+      console.error(err);
+    });
+
+    return this.imagenesCollection.doc(id).delete(); // eliminacion de datos
+
+  }
+
 }
