@@ -37,6 +37,7 @@ export class UploadComponent implements OnInit {
   constructor(private fb:FormBuilder, private renderer:Renderer2, private imagenesSvc: ImagenesService) { }
 
   ngOnInit(): void {
+    this.mostrarImg()
   }
   //Carga de img General
   slectImage(event:any){
@@ -87,9 +88,7 @@ export class UploadComponent implements OnInit {
     }
   }
 
-//Faceapi.js (Promesas de llamadas) - Reconocmiento del rostro
-
-  processFace = async (image:any, imageContainer:any) => {
+  processFace = async (image:any, imageContainer:any) => { //Faceapi.js (Promesas de llamadas) - Reconocmiento del rostro
 
     await faceapi.nets.tinyFaceDetector.loadFromUri ('/assets/models'); // Detector cara
     await faceapi.nets.faceLandmark68Net.loadFromUri('/assets/models'); // Detector  puntos cardinales
@@ -112,6 +111,7 @@ export class UploadComponent implements OnInit {
         }else{
           imageContainer.querySelector('.status').innerText='Persona si detectada';
           imageContainer.querySelector('.status').style.color='#ffffff';
+          this.onSubmit();
           setTimeout(() => {
             imageContainer.querySelector('.status').innerText='';
             this.onSubmit();
@@ -146,12 +146,11 @@ export class UploadComponent implements OnInit {
           title:'La imagen se cargo',
           text:'En breve aparecera la imagen cargada'
         }).then((result)=>{
-
           if (result){
             this.imgURL = '../../../assets/img/noimage.jpg';
             this.imagenesForm.reset();
           }
-        })
+        });
       }else{
         // si no tiene datos
         if (!result.isConfirmed && !result.value){
@@ -164,9 +163,30 @@ export class UploadComponent implements OnInit {
             confirmButtonText:'OK'
           }).then((result)=>{
             this.imagenesForm.reset();
-          })
+          });
         }
       }
-    })
+    });
   }
+
+  mostrarImg(){ //mostrar img en la tabla
+
+    this.imagenesSvc.getImagenes().subscribe(res=>{
+
+      this.imagenesData = [];
+      res.forEach((element:ImagenesModel)=>{
+        this.imagenesData.push({
+          ...element
+        })
+      })
+
+    })
+
+  }
+
+  eliminar(id:any, nombreImagen:string){
+    this.imagenesSvc.delateimg(id, nombreImagen);
+  }
+
+
 }

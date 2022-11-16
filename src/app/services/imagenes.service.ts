@@ -26,10 +26,21 @@ export class ImagenesService {
     this.imagenesCollection = db.collection<ImagenesModel>('imagenes');
 
    }
-   getImagenes(){ //Llamada de la img
+   getImagenes():Observable<ImagenesModel[]>{ //llamada de img y datos en la tabla
+    return this.imagenesCollection.snapshotChanges().pipe( //llamada en la base de dato
+      map( actions => actions.map(a=>{ // Sicronizar data 
+        const data = a.payload.doc.data() as ImagenesModel;
+        const id = a.payload.doc.id;
+        return{id, ...data}
+
+      })
+
+      )
+
+    )
 
    } 
-   cargarImagenesFirebase(imagen:FileItems, imagesData:ImagenesModel){ //Carga de img
+   cargarImagenesFirebase(imagen:FileItems, imagesData:ImagenesModel){ //Subida de img
 
     const storage = getStorage();
     let item = imagen;
@@ -69,5 +80,22 @@ export class ImagenesService {
     }
 
    }
+
+
+   public delateimg(id:string, imagenNombre:string){ // eliminar usuario
+    const storage =  getStorage();
+    const delateimagen = ref(storage, `${this.CARPETA_IMAGENES}/${imagenNombre.replace(/ /g, '')}`);
+
+    deleteObject(delateimagen).then(()=>{ // eliminacion de la imagen
+
+      Swal.fire('Exito', 'Se elimino corectamnete', 'success');
+
+    }).catch((err)=>{
+      console.error(err);
+    });
+
+    return this.imagenesCollection.doc(id).delete(); // eliminacion de datos
+
+  }
 
 }
