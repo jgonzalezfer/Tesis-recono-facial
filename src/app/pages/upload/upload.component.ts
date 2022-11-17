@@ -123,7 +123,7 @@ export class UploadComponent implements OnInit {
   onSubmit(){ // activación de envio de datos
     Swal.fire({
       //Datos del Estudiante 
-      title:'Introducir el nombre Del Estudiante',
+      title:'Introducir el nombre del Estudiante',
       input: 'text',
       inputAttributes: {
         autocapitalize: 'off'
@@ -156,7 +156,7 @@ export class UploadComponent implements OnInit {
           Swal.fire({
             icon:'error',
             title:'Error',
-            text:'Debe llenar los campos',
+            text:'Debe llenar el nombre',
             confirmButtonText:'OK'
           }).then((result)=>{
             this.imagenesForm.reset();
