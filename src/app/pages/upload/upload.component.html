@@ -31,22 +31,33 @@
                 <div class="card">
                     <div class="card text-white bg-dark mb-3">
                         <div class="card-header bg-secondary">Lista de Estudiante</div>
-                        <table class="table table-hover table-dark">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Fotografias</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let imagen of imagenesData">
-                                    <td><img [src]="imagen.imgUrl" width="50"></td>
-                                    <td>{{imagen.nombreImagen}}</td>
-                                    <td><button class="btn btn-danger btn-sm" (click)="eliminar(imagen.id, imagen.nombreImagen)"><i class="fa fa-trash"></i> </button></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            <div class="table-responsive-sm">
+                                <table class="table table-striped table-dark">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Fotografias</th>
+                                            <th scope="col">Nombre y Apellido</th>
+                                            <th scope="col">RUN</th>
+                                            <th scope="col">Carrera</th>
+                                            <th scope="col">Asignatura</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let imagen of imagenesData">
+                                            <td><img [src]="imagen.imgUrl" width="50"></td>
+                                            <td>{{imagen.nombreImagen}}</td>
+                                            <td>{{imagen.rut}}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <button class="btn btn-danger btn-sm" (click)="eliminar(imagen.id, imagen.nombreImagen)"><i class="fa fa-trash"></i> </button>
+                                                <button class="btn btn-info btn-sm"><i class="fa fa-pencil-square-o"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                     </div>
                 </div>
             </div>
