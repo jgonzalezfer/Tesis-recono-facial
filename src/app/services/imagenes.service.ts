@@ -41,16 +41,12 @@ export class ImagenesService {
 
    } 
    cargarImagenesFirebase(imagen:FileItems, imagesData:ImagenesModel){ //Subida de img
-
     const storage = getStorage();
     let item = imagen;
-
     //Borar espacios en el nombre
     let imagenTrim = imagesData.nombreImagen;
     const storageRef = ref(storage, `${this.CARPETA_IMAGENES}/${imagenTrim.replace(/ /g, '')}`);
-
     const uploadTask = uploadBytesResumable(storageRef,item.archivo); //Tarea de la carga de img
-
     uploadTask.on('state_changed', (snapshot)=>{
       this.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100; //Barra de progreso
       console.log(this.progress);
@@ -59,43 +55,31 @@ export class ImagenesService {
    },()=>
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{ //carga del archivo y controlando la referencia, ademas sus promesas
       item.url = downloadURL;
-      //guardar img
+      //guardar img y datos
       this.guardarImagen({
         nombreImagen:imagesData.nombreImagen,
+        rut:imagesData.rut,
         imgUrl:item.url
       });
     })
    )
    }
-   async guardarImagen(imagen:{nombreImagen:string, imgUrl:string}):Promise<any>{ //Guardar img
-
+   async guardarImagen(imagen:{nombreImagen:string, imgUrl:string, rut:string}):Promise<any>{ //Guardar img
     try{
-
       return await this.db.collection('imagenes').add(imagen); // llamda de imagen y añadir a db
-
     } catch(err){
-
       console.log(err);
-
     }
-
    }
-
 
    public delateimg(id:string, imagenNombre:string){ // eliminar usuario
     const storage =  getStorage();
     const delateimagen = ref(storage, `${this.CARPETA_IMAGENES}/${imagenNombre.replace(/ /g, '')}`);
-
     deleteObject(delateimagen).then(()=>{ // eliminacion de la imagen
-
-      Swal.fire('Exito', 'Se elimino corectamnete', 'success');
-
+      Swal.fire('Exito', 'Se elimino correctamente', 'success');
     }).catch((err)=>{
       console.error(err);
     });
-
     return this.imagenesCollection.doc(id).delete(); // eliminacion de datos
-
   }
-
 }

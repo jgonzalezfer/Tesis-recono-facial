@@ -121,10 +121,9 @@ export class UploadComponent implements OnInit {
   }
 
   onSubmit(){ // activación de envio de datos
-
     Swal.fire({
       //Datos del Estudiante 
-      title:'Introducir el nombre de la imagen',
+      title:'Introducir el nombre Del Estudiante',
       input: 'text',
       inputAttributes: {
         autocapitalize: 'off'
@@ -133,14 +132,12 @@ export class UploadComponent implements OnInit {
       confirmButtonText: 'Guardar',
       allowOutsideClick: false
     }).then((result)=>{
-
       if (result.isConfirmed && result.value){
-
         let cargarImagenDatos: any = {
-          nombreImagen:result.value
+          nombreImagen:result.value,
+          rut:result.value
         }
         this.imagenesSvc.cargarImagenesFirebase(this.imagen, cargarImagenDatos);
-
         Swal.fire({
           icon:'success',
           title:'La imagen se cargo',
@@ -159,7 +156,7 @@ export class UploadComponent implements OnInit {
           Swal.fire({
             icon:'error',
             title:'Error',
-            text:'Debe llenar el nombre',
+            text:'Debe llenar los campos',
             confirmButtonText:'OK'
           }).then((result)=>{
             this.imagenesForm.reset();
