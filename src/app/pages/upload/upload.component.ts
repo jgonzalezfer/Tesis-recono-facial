@@ -71,7 +71,7 @@ export class UploadComponent implements OnInit {
   
       icon.classList.add('fa');
       icon.classList.add('fa-3x');
-      icon.classList.add('fa-spiner');
+      icon.classList.add('fa-spinner');
       icon.classList.add('fa-pulse');
       
       status.classList.add('status');
@@ -107,7 +107,7 @@ export class UploadComponent implements OnInit {
             this.imgURL = '../../../assets/img/noimage.jpg';
             this.imagenesForm.reset();
           }, 2000);
-          this.btnActive =false;
+          this.btnActive = false;
         }else{
           imageContainer.querySelector('.status').innerText='Persona si detectada';
           imageContainer.querySelector('.status').style.color='#ffffff';
@@ -123,13 +123,16 @@ export class UploadComponent implements OnInit {
   onSubmit(){ // activación de envio de datos
     Swal.fire({
       //Datos del Estudiante 
-      title:'Introducir el nombre del Estudiante',
+      title:'Introducir los datos del Estudiante',
       input: 'text',
+      icon: 'info',
+      inputPlaceholder: 'Nombre y Apellido',
       inputAttributes: {
         autocapitalize: 'off'
       },
       showCancelButton:true,
       confirmButtonText: 'Guardar',
+      cancelButtonText: 'Salir',
       allowOutsideClick: false
     }).then((result)=>{
       if (result.isConfirmed && result.value){
@@ -156,7 +159,7 @@ export class UploadComponent implements OnInit {
           Swal.fire({
             icon:'error',
             title:'Error',
-            text:'Debe llenar el nombre',
+            text:'Debe llenar los cammpos',
             confirmButtonText:'OK'
           }).then((result)=>{
             this.imagenesForm.reset();

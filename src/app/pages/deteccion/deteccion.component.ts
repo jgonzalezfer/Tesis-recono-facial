@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ImagenesService } from 'src/app/services/imagenes.service';
 
 @Component({
   selector: 'app-deteccion',
@@ -7,9 +8,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeteccionComponent implements OnInit {
 
-  constructor() { }
+  //Variables
+  idImagen:any;
+  imagenData:any;
+  imgNombre:any;
+  imgFoto:any;
 
-  ngOnInit(): void {
+  constructor(private imagenesSvc:ImagenesService) { }
+
+  ngOnInit() {
+
+    this.obtenerImg();
+
   }
 
+// Obtener la Id que está almacenada en caché y obtener los datos del estudiante por la id
+  obtenerImg(){
+    this.idImagen = localStorage.getItem('id');
+    this.imagenesSvc.getImagen(this.idImagen).subscribe(res=>{
+        this.imagenData = res;
+        this.imgNombre = this.imagenData.nombreImagen;
+        this.imgFoto = this.imagenData.imgUrl;
+    })
+  }
+
+  volver(){
+    localStorage.removeItem('id');
+    location.href = '/identificar';
+  }
 }
