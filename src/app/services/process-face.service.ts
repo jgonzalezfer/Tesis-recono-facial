@@ -43,7 +43,7 @@ export class ProcessFaceService {
   }
   descriptor(detection:any){  
     if(detection){
-      const bestMatch = this.faceMatcher.findBestMatch(detection.descriptor);
+      const bestMatch = this.faceMatcher.findBestMatch(detection.descriptor)
       this.idImage = bestMatch.label;
       this.imagenEncontrada(this.idImage);
     }
@@ -54,6 +54,11 @@ export class ProcessFaceService {
       return
     }else{
       console.log('Datos recibidos', id);
+
+      localStorage.setItem('id', id)
+
+      location.href ='/deteccion';
+
     }
   }
   

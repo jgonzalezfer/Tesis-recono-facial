@@ -40,6 +40,11 @@ export class ImagenesService {
     )
 
    } 
+
+   getImagen(id:any){// obtener imagen de la base de dato por la id
+      return this.imagenesCollection.doc(id).valueChanges();
+   }
+
    cargarImagenesFirebase(imagen:FileItems, imagesData:ImagenesModel){ //Subida de img
     const storage = getStorage();
     let item = imagen;

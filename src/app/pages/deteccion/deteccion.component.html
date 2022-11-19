@@ -7,12 +7,12 @@
 
             <div class="card bg-dark" style="color: white">
                 <div class="header text-center">
-                  titulo nombre
+                 {{imgNombre | uppercase}}
                 </div>
-                <img src="../../../assets/img/noimage.png" class="img-card-top">
+                <img [src]="imgFoto" class="img-card-top">
                 <div class="card-body text-center">
                  
-                    <button type="button" class="btn btn-danger">Volver</button>
+                    <button type="button" class="btn btn-danger" (click)="volver()">Volver</button>
                  
                 </div>
             </div>
