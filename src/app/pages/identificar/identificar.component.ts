@@ -1,7 +1,8 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import * as faceapi from 'face-api.js';
 import { ImagenesService } from 'src/app/services/imagenes.service';
 import { ProcessFaceService } from 'src/app/services/process-face.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-identificar',
@@ -9,6 +10,7 @@ import { ProcessFaceService } from 'src/app/services/process-face.service';
   styleUrls: ['./identificar.component.css']
 })
 export class IdentificarComponent implements OnInit {
+  imgProcess : any;
 
   @ViewChild('videoContainer', { static: true }) videoContainer!: ElementRef; // LLammada al html video
   @ViewChild('myCanvas', { static: true }) myCanvas!: ElementRef; // LLammada al html canvas
@@ -17,7 +19,7 @@ export class IdentificarComponent implements OnInit {
 
   public context!: CanvasRenderingContext2D;
 
-  constructor(private imagenesSvc: ImagenesService, private processSvc:ProcessFaceService) { }
+  constructor(private imagenesSvc: ImagenesService, private processSvc:ProcessFaceService,private renderer:Renderer2) { }
 
   ngOnInit(): void {
 
@@ -66,9 +68,9 @@ export class IdentificarComponent implements OnInit {
       const detection = await faceapi.detectSingleFace(this.videoContainer.nativeElement, new faceapi.TinyFaceDetectorOptions())
         .withFaceLandmarks()
         .withFaceDescriptor()
-      
+        this.cargarrecono();
         if (typeof detection === 'undefined') return; // Img no encontrada
-
+        
         this.processSvc.descriptor(detection);
 
 
@@ -91,17 +93,19 @@ export class IdentificarComponent implements OnInit {
         const imageElement = document.createElement('img');
         imageElement.src = imagen.imgUrl;
         imageElement.crossOrigin = 'anonymous';
-
-         this.processSvc.processFace(imageElement, imagen.id);
-
+        this.processSvc.processFace(imageElement, imagen.id);
       })
-
-
-
     })
-
-
   }
 
-
+  cargarrecono(){ 
+    Swal.fire({
+      imageUrl: 'http://guanajuatoconstruye.mx/estimacionesd/img/cargando.gif',
+      imageHeight: 100,
+      imageAlt: 'Cargando',
+      showCloseButton: true,
+      showCancelButton: false,
+      showConfirmButton: false,
+    })
+  }
 }

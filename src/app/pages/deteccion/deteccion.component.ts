@@ -13,6 +13,9 @@ export class DeteccionComponent implements OnInit {
   imagenData:any;
   imgNombre:any;
   imgFoto:any;
+  asignatura:any;
+  rut:any;
+  carrera:any;
 
   constructor(private imagenesSvc:ImagenesService) { }
 
@@ -27,6 +30,9 @@ export class DeteccionComponent implements OnInit {
         this.imagenData = res;
         this.imgNombre = this.imagenData.nombreImagen;
         this.imgFoto = this.imagenData.imgUrl;
+        this.asignatura = this.imagenData.asignatura;
+        this.rut =this.imagenData.rut;
+        this.carrera =this.imagenData.carrera;
     })
   }
 
