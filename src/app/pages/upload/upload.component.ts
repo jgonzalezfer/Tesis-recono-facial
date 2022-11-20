@@ -111,7 +111,6 @@ export class UploadComponent implements OnInit {
         }else{
           imageContainer.querySelector('.status').innerText='Persona si detectada';
           imageContainer.querySelector('.status').style.color='#ffffff';
-          this.onSubmit();
           setTimeout(() => {
             imageContainer.querySelector('.status').innerText='';
             this.onSubmit();
@@ -120,13 +119,24 @@ export class UploadComponent implements OnInit {
         }
   }
 
-  onSubmit(){ // activación de envio de datos
-    Swal.fire({
+  async onSubmit(){ // activación de envio de datos
+    
+  await Swal.fire({
       //Datos del Estudiante 
       title:'Introducir los datos del Estudiante',
-      input: 'text',
+      html: `
+      <input type="text" id="swal-input1" class="swal2-input" placeholder="Ingrese Nombre y Apelliado">
+      <input type="text" id="swal-input2" class="swal2-input" placeholder="Ingrese RUT">
+      <input type="text" id="swal-input3" class="swal2-input" placeholder="Ingrese Carrea">
+      <input type="text" id="swal-input4" class="swal2-input" placeholder="Ingrese Asignatura">`,
+      preConfirm: () => {
+        const nombreImagen = (document.getElementById('swal-input1')as HTMLInputElement | null)?.value
+        const rut = (document.getElementById('swal-input2')as HTMLInputElement | null)?.value
+        const carrera = (document.getElementById('swal-input3')as HTMLInputElement | null)?.value
+        const asignatura = (document.getElementById('swal-input4')as HTMLInputElement | null)?.value
+        return { nombreImagen:nombreImagen, rut:rut, carrera:carrera, asignatura:asignatura }
+      },
       icon: 'info',
-      inputPlaceholder: 'Nombre y Apellido',
       inputAttributes: {
         autocapitalize: 'off'
       },
@@ -135,10 +145,13 @@ export class UploadComponent implements OnInit {
       cancelButtonText: 'Salir',
       allowOutsideClick: false
     }).then((result)=>{
+      console.log('datos', result);
       if (result.isConfirmed && result.value){
         let cargarImagenDatos: any = {
-          nombreImagen:result.value,
-          rut:result.value
+          nombreImagen:result.value.nombreImagen,
+          rut:result.value.rut,
+          carrera:result.value.carrera,
+          asignatura:result.value.asignatura
         }
         this.imagenesSvc.cargarImagenesFirebase(this.imagen, cargarImagenDatos);
         Swal.fire({
@@ -187,6 +200,5 @@ export class UploadComponent implements OnInit {
   eliminar(id:any, nombreImagen:string){
     this.imagenesSvc.delateimg(id, nombreImagen);
   }
-
 
 }

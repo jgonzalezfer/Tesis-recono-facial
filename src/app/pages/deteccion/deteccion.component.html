@@ -11,10 +11,9 @@
                     <hr class="my-3">
                     <p><strong>Sobre mí</strong></p>
                     <ul style="text-align: initial;">
-                        <li>Carrera: </li>
-                        <li>Asignaturas: </li>
-                        <li>Fecha de nacimiento: </li>
-                        <li>RUN: </li>
+                        <li>Carrera: {{carrera | uppercase}} </li>
+                        <li>Asignaturas: {{asignatura | uppercase}} </li>
+                        <li>RUT: {{rut | uppercase}} </li>
                     </ul>
                     <hr class="my-3">
                     <button type="button" class="btn btn-danger" (click)="volver()">Volver</button>

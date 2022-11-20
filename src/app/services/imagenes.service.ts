@@ -64,12 +64,14 @@ export class ImagenesService {
       this.guardarImagen({
         nombreImagen:imagesData.nombreImagen,
         rut:imagesData.rut,
+        asignatura:imagesData.asignatura,
+        carrera:imagesData.carrera,
         imgUrl:item.url
       });
     })
    )
    }
-   async guardarImagen(imagen:{nombreImagen:string, imgUrl:string, rut:string}):Promise<any>{ //Guardar img
+   async guardarImagen(imagen:{nombreImagen:string, imgUrl:string, rut:string,carrera:string, asignatura:string }):Promise<any>{ //Guardar img
     try{
       return await this.db.collection('imagenes').add(imagen); // llamda de imagen y añadir a db
     } catch(err){

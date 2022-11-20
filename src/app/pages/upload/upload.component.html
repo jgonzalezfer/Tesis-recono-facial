@@ -6,7 +6,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-5" style="position: relative;">
+            <div class="col-md-4" style="position: relative;">
 
                 <div class="card text-white bg-dark">
 
@@ -27,7 +27,7 @@
                 </div>
 
             </div>
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card text-white bg-dark mb-3">
                         <div class="card-header bg-secondary">Lista de Estudiante</div>
@@ -37,7 +37,7 @@
                                         <tr>
                                             <th scope="col">Fotografias</th>
                                             <th scope="col">Nombre y Apellido</th>
-                                            <th scope="col">RUN</th>
+                                            <th scope="col">RUT</th>
                                             <th scope="col">Carrera</th>
                                             <th scope="col">Asignatura</th>
                                             <th scope="col">Acciones</th>
@@ -48,8 +48,8 @@
                                             <td><img [src]="imagen.imgUrl" width="50"></td>
                                             <td>{{imagen.nombreImagen}}</td>
                                             <td>{{imagen.rut}}</td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{imagen.carrera}}</td>
+                                            <td>{{imagen.asignatura}}</td>
                                             <td>
                                                 <button class="btn btn-danger btn-sm" (click)="eliminar(imagen.id, imagen.nombreImagen)"><i class="fa fa-trash"></i> </button>
                                                 <button class="btn btn-info btn-sm"><i class="fa fa-pencil-square-o"></i></button>
