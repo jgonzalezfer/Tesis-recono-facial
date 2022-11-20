@@ -17,9 +17,7 @@ export class DeteccionComponent implements OnInit {
   constructor(private imagenesSvc:ImagenesService) { }
 
   ngOnInit() {
-
     this.obtenerImg();
-
   }
 
 // Obtener la Id que está almacenada en caché y obtener los datos del estudiante por la id

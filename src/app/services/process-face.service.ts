@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as faceapi from 'face-api.js';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,6 @@ export class ProcessFaceService {
   constructor() { }
 
   async processFace(image:any, id:string){
-
     //librerias de reconocmiento facial y 
     await faceapi.nets.tinyFaceDetector.loadFromUri ('/assets/models'); // Detector cara
     await faceapi.nets.faceLandmark68Net.loadFromUri('/assets/models'); // Detector  puntos cardinales
@@ -41,7 +41,7 @@ export class ProcessFaceService {
      )
    ))
   }
-  descriptor(detection:any){  
+  descriptor(detection:any){  //comparador de las img
     if(detection){
       const bestMatch = this.faceMatcher.findBestMatch(detection.descriptor)
       this.idImage = bestMatch.label;
@@ -49,17 +49,24 @@ export class ProcessFaceService {
     }
 
   }
-  imagenEncontrada(id:string){ // Img encontrada
-    if(id==='unknow'){
+  imagenEncontrada(id:string){ // Encontrar img
+    if(id === 'unknown'){
+      this.errorEncontrarimg();
       return
     }else{
       console.log('Datos recibidos', id);
-
       localStorage.setItem('id', id)
-
-      location.href ='/deteccion';
-
+      location.href ='/deteccion'
     }
+  }
+
+  errorEncontrarimg(){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: ' No tienes ninguna similitud con ningún estudiante. ',
+      footer: '<a href="">Contacta con un Profesor Guía</a>'
+    })
   }
   
 }
