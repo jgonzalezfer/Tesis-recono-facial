@@ -124,10 +124,10 @@ export class UploadComponent implements OnInit {
   await Swal.fire({// Pop-up De datos 
       title:'Introducir los datos del Estudiante',
       html: `
-      <input type="text" id="swal-input1" class="swal2-input" placeholder="Ingrese Nombre y Apelliado">
-      <input type="text" id="swal-input2" class="swal2-input" placeholder="Ingrese RUT">
-      <input type="text" id="swal-input3" class="swal2-input" placeholder="Ingrese Carrea">
-      <input type="text" id="swal-input4" class="swal2-input" placeholder="Ingrese Asignatura">`,
+      <input type="text" id="swal-input1" style="width: 350px !important;" class="swal2-input" placeholder="Ingrese Nombre y Apelliado">
+      <input type="text" id="swal-input2" style="width: 350px !important;" class="swal2-input" placeholder="Ingrese RUT">
+      <input type="text" id="swal-input3" style="width: 350px !important;" class="swal2-input" placeholder="Ingrese Carrea">
+      <input type="text" id="swal-input4" style="width: 350px !important;" class="swal2-input" placeholder="Ingrese Asignatura">`,
       preConfirm: () => {
         const nombreImagen = (document.getElementById('swal-input1')as HTMLInputElement | null)?.value
         const rut = (document.getElementById('swal-input2')as HTMLInputElement | null)?.value
@@ -155,14 +155,95 @@ export class UploadComponent implements OnInit {
         this.imagenesSvc.cargarImagenesFirebase(this.imagen, cargarImagenDatos);
         Swal.fire({
           icon:'success',
-          title:'La imagen se cargo',
-          text:'En breve aparecera la imagen cargada'
+          title:'Datos Guardados',
+          text:'En breve aparecera la imagen cargada y sus datos'
         }).then((result)=>{
           if (result){
             this.imgURL = '../../../assets/img/noimage.jpg';
             this.imagenesForm.reset();
           }
-        });
+        })
+      }else{
+        // si no tiene datos
+        if (!result.isConfirmed && !result.value){
+          location.reload();
+        }else{
+          Swal.fire({
+            icon:'error',
+            title:'Error',
+            text:'Debe llenar los cammpos',
+            confirmButtonText:'OK'
+          }).then((result)=>{
+            this.imagenesForm.reset();
+          })
+        }
+      }
+    });
+  }
+
+  mostrarImg(){ //mostrar img en la tabla
+
+    this.imagenesSvc.getImagenes().subscribe(res=>{
+
+      this.imagenesData = [];
+      res.forEach((element:ImagenesModel)=>{
+        this.imagenesData.push({
+          ...element
+        })
+      })
+    })
+  }
+
+  eliminar(id:any, nombreImagen:string){ // Eliminar estudiante
+    this.imagenesSvc.delateimg(id, nombreImagen);
+  }
+
+  async actualizaDatos(id:any, nombreImagen:any, rut:any, carrera:any, asignatura:any, img:any){ // Pop-up De actualizar datos 
+    console.log('id', id )
+    await Swal.fire({
+      title:'Introducir los datos del Estudiante para actualizar',
+      html: 
+      `<img alt="" width="100" src="` + img + `">`+
+      `<input type="text" id="swal-input1" style="width: 350px !important;" class="swal2-input" placeholder="Ingrese Nombre y Apelliado" value="`+ nombreImagen + `">`+ 
+      `<input type="text" id="swal-input2" style="width: 350px !important;" class="swal2-input" placeholder="Ingrese Rut" value="` + rut + `">`+
+      `<input type="text" id="swal-input3" style="width: 350px !important;" class="swal2-input" placeholder="Ingrese Carrera" value="` + carrera + `">`+
+      `<input type="text" id="swal-input4" style="width: 350px !important;" class="swal2-input" placeholder="Ingrese Asignatura" value="` + asignatura + `">`,
+      preConfirm: (id:any) => {
+        const ids = id
+        const nombreImagen = (document.getElementById('swal-input1') as HTMLInputElement | null )?.value 
+        const rut = (document.getElementById('swal-input2') as HTMLInputElement | null)?.value
+        const carrera = (document.getElementById('swal-input3') as HTMLInputElement | null)?.value
+        const asignatura = (document.getElementById('swal-input4') as HTMLInputElement | null)?.value
+        return { nombreImagen:nombreImagen, rut:rut, carrera:carrera, asignatura:asignatura, id:ids }
+      },
+      icon: 'info',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton:true,
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Salir',
+      allowOutsideClick: false
+    }).then((result)=>{
+      console.log('datos', result);
+      if (result.isConfirmed && result.value){
+        let cargarImagenDatos: any = {
+          nombreImagen:result.value.nombreImagen,
+          rut:result.value.rut,
+          carrera:result.value.carrera,
+          asignatura:result.value.asignatura
+        }
+        this.imagenesSvc.actualizarDatos(cargarImagenDatos, id);
+        Swal.fire({
+          icon:'success',
+          title:'Datos cargados',
+          text:'En breve aparecera los datos del estudiante actualizados'
+        }).then((result)=>{
+          if (result){
+            this.imgURL = '../../../assets/img/noimage.jpg';
+            this.imagenesForm.reset();
+          }
+        })
       }else{
         // si no tiene datos
         if (!result.isConfirmed && !result.value){
@@ -179,29 +260,6 @@ export class UploadComponent implements OnInit {
         }
       }
     });
-  }
-
-  mostrarImg(){ //mostrar img en la tabla
-
-    this.imagenesSvc.getImagenes().subscribe(res=>{
-
-      this.imagenesData = [];
-      res.forEach((element:ImagenesModel)=>{
-        this.imagenesData.push({
-          ...element
-        })
-      })
-
-    })
-
-  }
-
-  eliminar(id:any, nombreImagen:string){ // Eliminar estudiante
-    this.imagenesSvc.delateimg(id, nombreImagen);
-  }
-
-  actualizaDatos(){
-    
   }
 
 }
