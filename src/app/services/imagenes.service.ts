@@ -79,14 +79,22 @@ export class ImagenesService {
     }
    }
 
-   public delateimg(id:string, imagenNombre:string){ // eliminar usuario
+   public delateimg(id:string, imagenNombre:string){ // eliminar usuario y imagen
     const storage =  getStorage();
     const delateimagen = ref(storage, `${this.CARPETA_IMAGENES}/${imagenNombre.replace(/ /g, '')}`);
-    deleteObject(delateimagen).then(()=>{ // eliminacion de la imagen
+    deleteObject(delateimagen).then(()=>{ 
       Swal.fire('Exito', 'Se elimino correctamente', 'success');
     }).catch((err)=>{
       console.error(err);
     });
     return this.imagenesCollection.doc(id).delete(); // eliminacion de datos
+  }
+
+  async actualizarDatos(imagen:{nombreImagen:string, rut:string,carrera:string, asignatura:string }, id:string):Promise<any>{ //Guardar img
+    try{
+      return await this.db.collection('imagenes').doc(id).update(imagen); // llamda de imagen y añadir a db
+    } catch(err){
+      console.log(err);
+    }
   }
 }
