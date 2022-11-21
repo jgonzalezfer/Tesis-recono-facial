@@ -119,10 +119,9 @@ export class UploadComponent implements OnInit {
         }
   }
 
-  async onSubmit(){ // activación de envio de datos
+  async onSubmit(){ // activación de envio de datos del Estudiante 
     
-  await Swal.fire({
-      //Datos del Estudiante 
+  await Swal.fire({// Pop-up De datos 
       title:'Introducir los datos del Estudiante',
       html: `
       <input type="text" id="swal-input1" class="swal2-input" placeholder="Ingrese Nombre y Apelliado">
@@ -197,8 +196,12 @@ export class UploadComponent implements OnInit {
 
   }
 
-  eliminar(id:any, nombreImagen:string){
+  eliminar(id:any, nombreImagen:string){ // Eliminar estudiante
     this.imagenesSvc.delateimg(id, nombreImagen);
+  }
+
+  actualizaDatos(){
+    
   }
 
 }

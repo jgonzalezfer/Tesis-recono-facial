@@ -68,17 +68,19 @@ export class IdentificarComponent implements OnInit {
       const detection = await faceapi.detectSingleFace(this.videoContainer.nativeElement, new faceapi.TinyFaceDetectorOptions())
         .withFaceLandmarks()
         .withFaceDescriptor()
-        this.cargarrecono();
-        if (typeof detection === 'undefined') return; // Img no encontrada
         
+        if (typeof detection === 'undefined') {// Img no encontrada
+          setTimeout(() => {
+            this.noreconocido();
+          }, 2000);
+          console.log('no', detection);
+          return; 
+        }
         this.processSvc.descriptor(detection);
-
-
     }
 
     setInterval(processFace, 2000);
     requestAnimationFrame(reDraw);
-
   }
 
   // Solicitud de las iamgenes de firebase 
@@ -106,6 +108,15 @@ export class IdentificarComponent implements OnInit {
       showCloseButton: true,
       showCancelButton: false,
       showConfirmButton: false,
+    })
+  }
+
+  noreconocido(){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'No tienes ninguna similitud con ningún estudiante',
+      footer: 'Contacte con un Profesor'
     })
   }
 }
