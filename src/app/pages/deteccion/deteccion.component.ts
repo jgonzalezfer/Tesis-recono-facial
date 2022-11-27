@@ -23,7 +23,7 @@ export class DeteccionComponent implements OnInit {
     this.obtenerImg();
   }
 
-// Obtener la Id que está almacenada en caché y obtener los datos del estudiante por la id
+// Obtener la Id que está almacenada localStorage y obtener los datos del estudiante por la id
   obtenerImg(){
     this.idImagen = localStorage.getItem('id');
     this.imagenesSvc.getImagen(this.idImagen).subscribe(res=>{

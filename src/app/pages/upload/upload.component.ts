@@ -199,7 +199,7 @@ export class UploadComponent implements OnInit {
   }
 
   async actualizaDatos(id:any, nombreImagen:any, rut:any, carrera:any, asignatura:any, img:any){ // Pop-up De actualizar datos 
-    console.log('id', id )
+    console.log('id', id ) // visualizar id
     await Swal.fire({
       title:'Introducir los datos del Estudiante para actualizar',
       html: 
@@ -221,7 +221,7 @@ export class UploadComponent implements OnInit {
         autocapitalize: 'off'
       },
       showCancelButton:true,
-      confirmButtonText: 'Guardar',
+      confirmButtonText: 'Actualiar',
       cancelButtonText: 'Salir',
       allowOutsideClick: false
     }).then((result)=>{

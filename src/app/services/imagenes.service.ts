@@ -49,7 +49,7 @@ export class ImagenesService {
     const storage = getStorage();
     let item = imagen;
     //Borar espacios en el nombre
-    let imagenTrim = imagesData.nombreImagen;
+    let imagenTrim = imagesData.rut;
     const storageRef = ref(storage, `${this.CARPETA_IMAGENES}/${imagenTrim.replace(/ /g, '')}`);
     const uploadTask = uploadBytesResumable(storageRef,item.archivo); //Tarea de la carga de img
     uploadTask.on('state_changed', (snapshot)=>{
