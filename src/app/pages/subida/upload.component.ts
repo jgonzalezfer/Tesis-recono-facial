@@ -16,7 +16,7 @@ import { ImagenesService } from 'src/app/services/imagenes.service';
 })
 export class UploadComponent implements OnInit {
 
-  
+  //variables
   imgElement = '';
   imgURL = '../../../assets/img/noimage.jpg';
   imagen : any;
@@ -101,7 +101,7 @@ export class UploadComponent implements OnInit {
         if (typeof detection === 'undefined'){ // Reconocmiento de imagen(si es persona o no)
             
           imageContainer.querySelector('.status').innerText='Persona no detectada';
-          imageContainer.querySelector('.status').style.color='red';
+          imageContainer.querySelector('.status').style.color='#dc0000';
           setTimeout(() => {
             imageContainer.querySelector('.status').innerText='';
             this.imgURL = '../../../assets/img/noimage.jpg';
@@ -114,7 +114,7 @@ export class UploadComponent implements OnInit {
           setTimeout(() => {
             imageContainer.querySelector('.status').innerText='';
             this.onSubmit();
-          }, 4000);
+          }, 5000);
 
         }
   }
@@ -133,6 +133,9 @@ export class UploadComponent implements OnInit {
         const rut = (document.getElementById('swal-input2')as HTMLInputElement | null)?.value
         const carrera = (document.getElementById('swal-input3')as HTMLInputElement | null)?.value
         const asignatura = (document.getElementById('swal-input4')as HTMLInputElement | null)?.value
+        if (!nombreImagen || !rut || !carrera || !asignatura) {
+          Swal.showValidationMessage(`Debe llenar los cammpos`)
+        }
         return { nombreImagen:nombreImagen, rut:rut, carrera:carrera, asignatura:asignatura }
       },
       icon: 'info',
@@ -163,6 +166,8 @@ export class UploadComponent implements OnInit {
             this.imagenesForm.reset();
           }
         })
+        console.log('isConfirmed', result.isConfirmed )
+        console.log('value', result.value )
       }else{
         // si no tiene datos
         if (!result.isConfirmed && !result.value){
@@ -178,13 +183,10 @@ export class UploadComponent implements OnInit {
           })
         }
       }
-    });
+    })
   }
-
   mostrarImg(){ //mostrar img en la tabla
-
     this.imagenesSvc.getImagenes().subscribe(res=>{
-
       this.imagenesData = [];
       res.forEach((element:ImagenesModel)=>{
         this.imagenesData.push({
@@ -193,11 +195,9 @@ export class UploadComponent implements OnInit {
       })
     })
   }
-
   eliminar(id:any, nombreImagen:string){ // Eliminar estudiante
     this.imagenesSvc.delateimg(id, nombreImagen);
   }
-
   async actualizaDatos(id:any, nombreImagen:any, rut:any, carrera:any, asignatura:any, img:any){ // Pop-up De actualizar datos 
     console.log('id', id ) // visualizar id
     await Swal.fire({
@@ -214,6 +214,9 @@ export class UploadComponent implements OnInit {
         const rut = (document.getElementById('swal-input2') as HTMLInputElement | null)?.value
         const carrera = (document.getElementById('swal-input3') as HTMLInputElement | null)?.value
         const asignatura = (document.getElementById('swal-input4') as HTMLInputElement | null)?.value
+        if (!nombreImagen || !rut || !carrera || !asignatura) {
+          Swal.showValidationMessage(`Debe llenar los cammpos`)
+        }
         return { nombreImagen:nombreImagen, rut:rut, carrera:carrera, asignatura:asignatura, id:ids }
       },
       icon: 'info',
@@ -259,7 +262,11 @@ export class UploadComponent implements OnInit {
           });
         }
       }
-    });
+    })
+  }
+
+  btnrepag(){
+    location.reload();
   }
 
 }
