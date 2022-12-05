@@ -46,7 +46,7 @@ export class IdentificarComponent implements OnInit {
     //librerias de reconocmiento facial
     await faceapi.nets.tinyFaceDetector.loadFromUri('/assets/models'); // Detector cara
     await faceapi.nets.faceLandmark68Net.loadFromUri('/assets/models'); // Detector  puntos cardinales
-    await faceapi.nets.faceRecognitionNet.loadFromUri('/assets/models'); // Reconocimiento
+    await faceapi.nets.faceRecognitionNet.loadFromUri('/assets/models'); // Reconocimientong
 
     this.imagesLista();
     // Activar permisos de la camara
@@ -69,13 +69,13 @@ export class IdentificarComponent implements OnInit {
         .withFaceLandmarks()
         .withFaceDescriptor()
         
+        setTimeout(() => {
         if (typeof detection === 'undefined') {// Img no encontrada
-          setTimeout(() => {
             this.noreconocido();
-          }, 2000);
           console.log('no', detection);
           return; 
         }
+      }, 4000);
         this.processSvc.descriptor(detection);
     }
 

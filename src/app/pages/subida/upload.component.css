@@ -7,3 +7,7 @@
 .zoom:hover {
     transform: scale(3.0); 
 }
+
+.imfg{
+    width: 20% !important;
+}

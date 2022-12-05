@@ -1,33 +1,29 @@
-<h1 style="text-align: center; color: rgb(255, 255, 255); "  >Subida de Datos - Firebase</h1>
-
+<h1 style="text-align: center; color: rgba(255, 255, 255, 0.952); "  >Subida de Datos - Firebase</h1>
 <hr>
-
 <div style="text-align: center">
-
     <div class="container">
-        <div class="row">
-            <div class="col-md-4" style="position: relative;">
-
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="col-md-8" style="position: relative;">
                 <div class="card text-white bg-dark">
-
-                    <div class="card-header bg-secondary" #imageFile>Subir Información del Estudiante</div>
-
+                    <div class="card-header bg-secondary" #imageFile>Ingresar Estudiante</div>
                     <div class="card-body">
-                        <img class="img-fluid" [src]="imgURL" class="card-img-top">
-                        <hr style="border-color:azure">
-                        <form (ngSubmit)="onSubmit()"[formGroup]="imagenesForm">
-                            <div class="form-group">
-                                <input type="file" class="form-control-file" class="form-control-file" 
-                                    formControlName="imgFile" accept="image/*" (change)="slectImage($event)">
-                                <button type="submit" class="btn btn-outline-secondary mt-3" [disabled]="btnActive">Enviar</button>
-                            </div>
-                        </form>
+                        <img class="img-fluid" [src]="imgURL" class="card-img-top imfg img-fluid">
+                        <hr style="border-color:rgb(243, 243, 243)">
+                        <div class="cds">
+                            <form (ngSubmit)="onSubmit()"[formGroup]="imagenesForm">
+                                <div class="form-group">
+                                    <input type="file" class="form-control-file mt-3" class="form-control-file" 
+                                        formControlName="imgFile" accept="image/*" (change)="slectImage($event)">
+                                    <button type="submit" class="btn btn-outline-secondary mt-3" [disabled]="btnActive">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-
                 </div>
-
             </div>
-            <div class="col-md-8">
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card text-white bg-dark mb-3">
                         <div class="card-header bg-secondary">Lista de Estudiante</div>
