@@ -1,4 +1,4 @@
-// Ts de activación a producción 
+// Ts de activación a producción de firebase
 export const environment = {
   firebase: {
     projectId: 'tesis-reco-facial',

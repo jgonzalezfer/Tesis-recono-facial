@@ -25,7 +25,6 @@ export class IdentificarComponent implements OnInit {
 
   }
 
-
   deteccion() { // Activar detección
     this.main();
   }
@@ -35,7 +34,6 @@ export class IdentificarComponent implements OnInit {
     location.reload();
 
   }
-
 
   main = async () => {
     // Variables de conección 
@@ -64,22 +62,18 @@ export class IdentificarComponent implements OnInit {
 
     // Activar Reconocmiento facial por Coincidencia de puntos cardinales
     const processFace = async () => {
-
       const detection = await faceapi.detectSingleFace(this.videoContainer.nativeElement, new faceapi.TinyFaceDetectorOptions())
         .withFaceLandmarks()
         .withFaceDescriptor()
         
-        setTimeout(() => {
         if (typeof detection === 'undefined') {// Img no encontrada
             this.noreconocido();
-          console.log('no', detection);
-          return; 
+            console.log('no', detection);
+            return; 
         }
-      }, 4000);
         this.processSvc.descriptor(detection);
     }
-
-    setInterval(processFace, 2000);
+    setInterval(processFace, 4000);
     requestAnimationFrame(reDraw);
   }
 
