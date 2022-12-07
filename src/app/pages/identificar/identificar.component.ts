@@ -36,6 +36,8 @@ export class IdentificarComponent implements OnInit {
   }
 
   main = async () => {
+    localStorage.removeItem('id');
+    var num:number = 0; 
     // Variables de conección 
     this.context = this.myCanvas.nativeElement.getContext('2d');
 
@@ -67,13 +69,20 @@ export class IdentificarComponent implements OnInit {
         .withFaceDescriptor()
         
         if (typeof detection === 'undefined') {// Img no encontrada
-            this.noreconocido();
+          num ++;
             console.log('no', detection);
-            return; 
+            console.log('termino', num );
+            this.noreconocido();
+
         }
+        if(num == 10){
+          console.log('termino');
+          location.reload();
+        }
+        
         this.processSvc.descriptor(detection);
     }
-    setInterval(processFace, 4000);
+    setInterval(processFace, 3000);
     requestAnimationFrame(reDraw);
   }
 
@@ -94,23 +103,17 @@ export class IdentificarComponent implements OnInit {
     })
   }
 
-  cargarrecono(){ 
-    Swal.fire({
-      imageUrl: 'http://guanajuatoconstruye.mx/estimacionesd/img/cargando.gif',
-      imageHeight: 100,
-      imageAlt: 'Cargando',
-      showCloseButton: true,
-      showCancelButton: false,
-      showConfirmButton: false,
-    })
-  }
+
 
   noreconocido(){
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'No tienes ninguna similitud con ningún estudiante',
-      footer: 'Contacte con un Profesor'
-    })
+    setTimeout(() => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No tienes ninguna similitud con ningún estudiante',
+        footer: 'Contacte con un Profesor'
+      })
+
+    }, 2000);
   }
 }
