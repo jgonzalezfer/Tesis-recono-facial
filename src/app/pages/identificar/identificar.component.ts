@@ -69,15 +69,19 @@ export class IdentificarComponent implements OnInit {
         .withFaceDescriptor()
         
         if (typeof detection === 'undefined') {// Img no encontrada
-          num ++;
             console.log('no', detection);
             console.log('termino', num );
             this.noreconocido();
-
         }
+        num ++;
         if(num == 10){
           console.log('termino');
           location.reload();
+
+           let idImagen: any = localStorage.getItem("constUndefined");
+           idImagen ++;
+           localStorage.setItem("constUndefined", idImagen )
+
         }
         
         this.processSvc.descriptor(detection);
