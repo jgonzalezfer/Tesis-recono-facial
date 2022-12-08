@@ -1,9 +1,13 @@
-<h1 style="text-align: center; color: rgba(255, 255, 255, 0.952); "  >Subida de Datos - Firebase</h1>
+<h2 style="text-align: center; color: rgba(255, 255, 255, 0.952); "  >Subida de Datos - Firebase</h2>
+<div id="elementscontar">
+    <h5 style="text-align: center; color: rgba(255, 255, 255, 0.952);">Cantidad de persona no detectada: {{titlecont}}</h5>
+</div>
+
 <hr>
 <div style="text-align: center">
     <div class="container">
-        <div class="row" style="margin-bottom: 20px;">
-            <div class="col-md-8" style="position: relative;">
+        <div class="row row-cols-5">
+            <div class="col-sm-3">
                 <div class="card text-white bg-dark">
                     <div class="card-header bg-secondary" #imageFile>Ingresar Estudiante</div>
                     <div class="card-body">
@@ -12,7 +16,7 @@
                         <div class="cds">
                             <form (ngSubmit)="onSubmit()"[formGroup]="imagenesForm">
                                 <div class="form-group">
-                                    <input type="file" class="form-control-file mt-3" class="form-control-file" 
+                                    <input type="file" class="form-control-file " class="form-control-file" 
                                         formControlName="imgFile" accept="image/*" (change)="slectImage($event)">
                                     <button type="submit" class="btn btn-outline-secondary mt-3" [disabled]="btnActive">Guardar</button>
                                 </div>
@@ -21,9 +25,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
+            <div class="col-sm-9">
                 <div class="card">
                     <div class="card text-white bg-dark mb-3">
                         <div class="card-header bg-secondary">Lista de Estudiante</div>

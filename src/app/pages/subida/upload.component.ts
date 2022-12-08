@@ -24,6 +24,7 @@ export class UploadComponent implements OnInit {
   imgProcess : any;
   btnActive = true;
   file : any;
+  titlecont : any ;
 
   //Lammada de img y su validacion 
   @ViewChild('imageFile',{static:true}) imageFile!:ElementRef;
@@ -38,6 +39,7 @@ export class UploadComponent implements OnInit {
 
   ngOnInit(): void {
     this.mostrarImg()
+    this.recargaElementscontar()
   }
   //Carga de img General
   slectImage(event:any){
@@ -267,6 +269,9 @@ export class UploadComponent implements OnInit {
 
   btnrepag(){
     location.reload();
+  }
+  recargaElementscontar(){
+    this.titlecont = localStorage.getItem("constUndefined")
   }
 
 }

@@ -25,7 +25,6 @@ export class IdentificarComponent implements OnInit {
 
   }
 
-
   deteccion() { // Activar detección
     this.main();
   }
@@ -36,8 +35,9 @@ export class IdentificarComponent implements OnInit {
 
   }
 
-
   main = async () => {
+    localStorage.removeItem('id');
+    var num:number = 0; 
     // Variables de conección 
     this.context = this.myCanvas.nativeElement.getContext('2d');
 
@@ -64,22 +64,29 @@ export class IdentificarComponent implements OnInit {
 
     // Activar Reconocmiento facial por Coincidencia de puntos cardinales
     const processFace = async () => {
-
       const detection = await faceapi.detectSingleFace(this.videoContainer.nativeElement, new faceapi.TinyFaceDetectorOptions())
         .withFaceLandmarks()
         .withFaceDescriptor()
         
-        setTimeout(() => {
         if (typeof detection === 'undefined') {// Img no encontrada
+            console.log('no', detection);
+            console.log('termino', num );
             this.noreconocido();
-          console.log('no', detection);
-          return; 
         }
-      }, 4000);
+        num ++;
+        if(num == 10){
+          console.log('termino');
+          location.reload();
+
+           let idImagen: any = localStorage.getItem("constUndefined");
+           idImagen ++;
+           localStorage.setItem("constUndefined", idImagen )
+
+        }
+        
         this.processSvc.descriptor(detection);
     }
-
-    setInterval(processFace, 2000);
+    setInterval(processFace, 3000);
     requestAnimationFrame(reDraw);
   }
 
@@ -100,23 +107,17 @@ export class IdentificarComponent implements OnInit {
     })
   }
 
-  cargarrecono(){ 
-    Swal.fire({
-      imageUrl: 'http://guanajuatoconstruye.mx/estimacionesd/img/cargando.gif',
-      imageHeight: 100,
-      imageAlt: 'Cargando',
-      showCloseButton: true,
-      showCancelButton: false,
-      showConfirmButton: false,
-    })
-  }
+
 
   noreconocido(){
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'No tienes ninguna similitud con ningún estudiante',
-      footer: 'Contacte con un Profesor'
-    })
+    setTimeout(() => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No tienes ninguna similitud con ningún estudiante',
+        footer: 'Contacte con un Profesor'
+      })
+
+    }, 2000);
   }
 }
