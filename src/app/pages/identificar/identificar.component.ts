@@ -74,7 +74,7 @@ export class IdentificarComponent implements OnInit {
             this.noreconocido();
         }
         num ++;
-        if(num == 10){
+        if(num == 7){
           console.log('termino');
           location.reload();
 
