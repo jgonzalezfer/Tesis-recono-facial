@@ -21,6 +21,7 @@
     "@angular/router": "~13.2.0",
     "@types/webgl2": "^0.0.6",
     "face-api.js": "^0.22.2",
+    "gh-pages": "^4.0.0",
     "rxjs": "~7.5.0",
     "sweetalert2": "^11.6.8",
     "tslib": "^2.3.0",
@@ -44,5 +45,18 @@
   "browser": {
     "fs": false,
     "path": false
-  }
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.1.",
+  "main": "karma.conf.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jgonzalezfer/Tesis-recono-facial.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jgonzalezfer/Tesis-recono-facial/issues"
+  },
+  "homepage": "https://github.com/jgonzalezfer/Tesis-recono-facial#readme"
 }
